@@ -84,6 +84,24 @@ An [interpreter](./src/free/interpreter.ts) provides an executable application b
 the operations of the abstract syntax tree to functions that implement them, ultimately resolving
 to the final result value after all operations are executed.
 
+The [free monad](./src/free/Free.ts) can be implemented in 2 styles, either the discriminated union style that
+is used in this solution, or the Church-encoded style as shown below. Church refers to the
+mathematician Alonzo Church.
+
+```typescript
+export type Free<A> = <R>(
+    onPure: (value: A) => R,
+    onImpure: (op: Op<Free<A>>) => R
+) => R
+```
+
+### Free Monad Characteristics
+- An explicit data structure (AST) is produced — the program is a value that fully describes the computation.
+- You can inspect, transform, replay, serialize, optimize, or batch the entire program before running it.
+- Interpretation is completely separate from construction — you decide later (or multiple times) how to run it.
+- Naturally stack-safe when using the Church-encoded or trampolined variants; the classic initial encoding can
+  blow the stack on very deep left-nested binds.
+
 # Comparison Table
 The different solution patterns for functional programming have different applications and of course
 different tradeoffs. Business applications will typically be a better fit for tagless final style,
