@@ -25,10 +25,31 @@ Implement the domain logic for “Place an order” - steps:
 This is a classic “application service” with multiple interpretable effects.
 
 ## Tagless Final
-“I describe how to do things, in abstract form, and supply concrete implementations.”
+"I describe how to do things, in abstract form, and supply concrete implementations."
 - Effects are represented as interfaces over a type constructor F.
 - Programs are written against capability interfaces.
-- Interpretation happens “inline” by supplying concrete instances of F.
+- Interpretation happens "inline" by supplying concrete instances of F.
+
+### ⚠️ Important Note on Complexity
+
+This project contains a **simplified, pedagogical implementation** of tagless final that demonstrates
+the core concepts without overwhelming complexity. Real-world tagless final implementations require
+significantly more machinery: typeclass abstractions (Monad, MonadError, Async, Bracket), error type
+threading, resource management, and extensive boilerplate.
+
+**For a detailed discussion of what's missing and why**, see:
+👉 **[TAGLESS_FINAL_COMPLEXITY.md](./TAGLESS_FINAL_COMPLEXITY.md)**
+
+This document explains:
+- What the simple implementation omits
+- The true complexity of production tagless final (with code examples)
+- Pain points discussed by John A. De Goes in "The Death of Tagless Final"
+- Alternative approaches (Module Pattern / ZIO Environment)
+- When to use each pattern
+
+The project includes both:
+- **Simple version**: `src/tagless/algebra.d.ts`, `src/tagless/Effect.ts` (great for learning)
+- **Complex version**: `src/tagless/algebra-complex.d.ts`, `src/tagless/typeclasses.ts` (shows reality)
 
 ### Code Structure
 The [algebra](./src/tagless/algebra.d.ts) is analogous to creating skeletal classes in OOP, but in FP
