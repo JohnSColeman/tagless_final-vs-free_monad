@@ -74,10 +74,29 @@ and transform ("map") the effects.
 - Harder to do things like: replay, analyze, batch, optimize.
 
 ## Free Monad
-"I describe what to do as a pure data structure. Someone else decides how to run it.”
+"I describe what to do as a pure data structure. Someone else decides how to run it."
 - All operations build an AST (a data structure).
 - The program is pure; no effects until interpreted.
 - Interpreters fold the AST into real effects.
+
+### ⚠️ Important Note on Complexity
+
+This project contains a **simplified, pedagogical implementation** of free monads that demonstrates
+the core concepts without overwhelming complexity. Real-world free monad implementations require
+significantly more machinery: stack-safety mechanisms (trampolining or Church encoding), error type
+threading, resource management (bracket patterns), and ergonomic improvements to avoid deeply nested
+callback hell.
+
+**For a detailed discussion of what's missing and why**, see:
+👉 **[FREE_MONAD_COMPLEXITY.md](./FREE_MONAD_COMPLEXITY.md)**
+
+This document explains:
+- What the simple implementation omits (stack safety, error handling, resource management)
+- The true complexity of production free monads (with code examples)
+- Pain points: nested callbacks, stack overflow on large programs, performance overhead (50-100x slower)
+- When free monads are actually useful (DSLs, program analysis, multiple backends, audit trails)
+- Modern alternatives (Effect systems like ZIO, algebraic effects, module pattern, async/await with DI)
+- Code comparison between simple demo and production-grade implementations
 
 ### Code Structure
 The [algebra](./src/free/algebra.d.ts) is an abstract syntax tree (AST) that can then be
